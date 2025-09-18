@@ -55,14 +55,11 @@ class MissCannibalsVariant(Problem):
                       new_state = self.result(state, action)
                       if self.is_valid_state(new_state):
                           actions.append(action)
-                      
-                           
         else:
             # generate possible actions from right side 
             m_available = self.N1 - state[0]
             c_available = self.N2 - state[1]
             
-              
             for m_count in range(m_available + 1):
               for c_count in range(c_available + 1):
                   if 1 <= m_count + c_count <= 3:
@@ -73,13 +70,33 @@ class MissCannibalsVariant(Problem):
                           actions.append(action)
             
         return actions
+    
+    def is_valid_state(self, new_state):
+        m_left = new_state[0]
+        c_left = new_state[1]
+        m_right = self.N1 - new_state[0]
+        c_right = self.N2 - new_state[1]
+        
+        # make sure theres no negative amount of people
+        if m_left < 0 or c_left < 0 or m_left < 0 or c_left < 0:
+            return False
+        
+        # check if missonaries are outnumbered on left and right 
+        # (at least one missionary is required for them to be outnumbered)
+        if m_left > 0 and m_left < c_left:
+            return False
+        
+        if m_right > 0 and m_right < c_right:
+            return False
+        
+        return True
         
 if __name__ == '__main__':
     mc = MissCannibalsVariant(4,4)
     print(mc.actions((3, 3, True))) # Test your code as you develop! This should return  ['MC', 'MMM']
 
-    # path = depth_first_graph_search(mc).solution()
-    # print(path)
-    # path = breadth_first_graph_search(mc).solution()
-    # print(path)
+    path = depth_first_graph_search(mc).solution()
+    print(path)
+    path = breadth_first_graph_search(mc).solution()
+    print(path)
 
