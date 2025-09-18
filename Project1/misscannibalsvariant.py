@@ -14,8 +14,13 @@ class MissCannibalsVariant(Problem):
         self.N1 = N1
         self.N2 = N2
         super().__init__(initial, goal)
-
-
+        
+    
+        
+        
+        
+        
+        
 if __name__ == '__main__':
     mc = MissCannibalsVariant(4,4)
     # print(mc.actions((3, 3, True))) # Test your code as you develop! This should return  ['MC', 'MMM']
