@@ -1,3 +1,10 @@
+# Name: Christian Carrillo
+# Date: 9-18-2025
+#
+# Fall 2025 CPSC 481-02 17420
+# 
+# Function docstrings from aima search.py
+
 from search import *
 
 class MissCannibalsVariant(Problem):
