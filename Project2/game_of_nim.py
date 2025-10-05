@@ -7,22 +7,48 @@ class GameOfNim(Game):
     a list with number of objects in each row."""
 
     def __init__(self, board=[3,1]):
-        raise NotImplementedError
+        # Generates moves based on row (x) and amount of available objects (y)
+        moves = [(x, y) for x in range(0, len(board))
+                 for y in range(1, board[x] + 1)]
+        
+        self.initial = GameState(to_move='X', utility=0, board=board, moves=moves)
 
     def actions(self, state):
         """Legal moves are at least one object, all from the same row."""
         return state.moves
 
     def result(self, state, move):
-        raise NotImplementedError
+        if move not in state.moves:
+            return state
+        
+        row, objects = move
+        
+        new_board = state.board.copy()
+        new_board[row] -= objects
+        
+        new_moves = [(x, y) for x in range(0, len(new_board))
+                    for y in range(1, new_board[x] + 1)]
+        
+        to_move = 'O' if state.to_move == 'X' else 'X'
+        
+        
+        if len(state.moves) == 0:
+            new_utility = -1 if to_move =='O' else 1
+        else:
+            new_utility = 1
+            
+        return GameState(to_move=to_move,
+                         utility=new_utility,
+                         board=new_board, moves=new_moves)
+        
 
     def utility(self, state, player):
         """Return the value to player; 1 for win, -1 for loss, 0 otherwise."""
-        raise NotImplementedError
+        return state.utility if player == 'X' else -state.utility
 
     def terminal_test(self, state):
         """A state is terminal if there are no objects left"""
-        raise NotImplementedError
+        return len(state.moves) == 0
 
     def display(self, state):
         board = state.board
