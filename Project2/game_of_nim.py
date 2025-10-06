@@ -1,3 +1,10 @@
+# Name: Christian Carrillo
+# Date: 10-5-2025
+#
+# Fall 2025 CPSC 481-02 17420
+# 
+# Game of Nim representation
+
 from games import *
 
 class GameOfNim(Game):
@@ -19,9 +26,9 @@ class GameOfNim(Game):
 
     def result(self, state, move):
         if move not in state.moves:
-            return state
+            return state # Illegal move has no effect
         
-        row, objects = move
+        row, objects = move # Unpack move
         
         new_board = state.board.copy()
         new_board[row] -= objects
@@ -31,11 +38,10 @@ class GameOfNim(Game):
         
         to_move = 'O' if state.to_move == 'X' else 'X'
         
-        
-        if len(state.moves) == 0:
+        if len(new_moves) == 0:
             new_utility = -1 if to_move =='O' else 1
         else:
-            new_utility = 1
+            new_utility = 0
             
         return GameState(to_move=to_move,
                          utility=new_utility,
